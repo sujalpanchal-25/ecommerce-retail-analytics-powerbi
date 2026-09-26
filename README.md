@@ -32,6 +32,7 @@
 - [🖥️ Dashboard Visual Showcase & Report Pages](#-dashboard-visual-showcase--report-pages)
   - [📊 Page 1: Year-Wise Sales & Financial Performance](#-page-1-year-wise-sales--financial-performance)
   - [👥 Page 2: Customer Retention & Order Intelligence](#-page-2-customer-retention--order-intelligence)
+  - [🧭 Feature Highlight: Interactive Collapsible Navigation Drawer](#-feature-highlight-interactive-collapsible-navigation-drawer)
 - [🧩 Data Architecture & Star Schema](#-data-architecture--star-schema)
 - [📚 Data Dictionary](#-data-dictionary)
 - [⚡ DAX Formulas & Business Logic](#-dax-formulas--business-logic)
@@ -76,81 +77,105 @@ The model processes **1,000,000 transactional records** spanning **2014 to 2021*
 
 ## 🖥️ Dashboard Visual Showcase & Report Pages
 
-The Power BI report utilizes an ultra-modern, custom-designed **1280×720 widescreen canvas** incorporating glassmorphic metric containers, dark/light theme harmony, responsive visual cards, and seamless bookmark-driven navigation.
+The Power BI report utilizes an ultra-modern, custom-designed **1280×720 widescreen canvas** incorporating glassmorphic metric containers, dark/light theme balance, dynamic sparklines, geospatial mapping, and bookmark-driven navigation.
 
 ---
 
 ### 📊 Page 1: Year-Wise Sales & Financial Performance
-> **Core Objective:** Macro-economic sales trajectory, Year-over-Year (YoY) revenue velocity, regional geographic penetration, and packaging distribution.
+> **Core Objective:** Macro-economic sales trajectory, Year-over-Year (YoY) revenue velocity ($105.40M), regional geographic penetration across Bangladesh, and packaging distribution.
 
 <div align="center">
-  <img src="assets/page1_year_wise_analysis.png" alt="Page 1: Year-Wise Analysis Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.25); margin-bottom: 8px;"/>
-  <p><b>Figure 1:</b> <i>Page 1 – Year-Wise Financial Performance, YoY Metric Scorecards, Monthly Sales Trends & Geographic Upazila Heatmap.</i></p>
+  <img src="assets/year_wise_analysis_report.png" alt="Page 1: Year-Wise Analysis Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 8px;"/>
+  <p><b>Figure 1:</b> <i>Page 1 – Year-Wise Financial Performance, YoY Metric Scorecards, Monthly Sales Trends & Bangladesh Geographical Heatmap.</i></p>
 </div>
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │  📊 YEAR WISE ANALYSIS                                                    [ Slicer ▾ ] │
 ├───────────────────┬───────────────────┬───────────────────┬────────────────────────────┤
-│   TOTAL SALES     │  TOTAL QUANTITY   │  AVG UNIT PRICE   │      TOTAL CUSTOMERS       │
-│  $105.4M (YoY %)  │   6.00M (YoY %)   │   $17.57 (YoY %)  │       9,191 (YoY %)        │
+│   TOTAL REVENUE   │  TOTAL QUANTITY   │  AVG UNIT PRICE   │      TOTAL CUSTOMERS       │
+│  $105.40M (▲16.1%)│   6.00M (▲16.1%)  │   $17.56 (▼0.0%)  │       9,191 (0.0% vs PY)   │
 ├───────────────────┴───────────────────┴───────────────────┴────────────────────────────┤
-│  📈 Monthly Sales Velocity Trend Line    │  🗺️ Regional Sales Map (District & Upazila) │
-│  📊 Units by Packaging Type (Bar Chart)  │  🍩 Top Customer Revenue Contribution      │
-│  📅 Monthly Quantity by Year (Columns)   │  🏪 Division-Wise Sales Ranking            │
+│  📈 Monthly Sales Velocity Trend Line    │  🗺️ Bangladesh Geographical Distribution     │
+│  📊 Top 5 Packaging Units (pk, pack, etc)│  🍩 Top Spending VIP Customer Breakdown     │
+│  📅 Bar Sparkline Revenue by Month       │  🏪 Division Sales Ranking (Dhaka: 41M)     │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### 🔍 Page 1 Visual Architecture & Insights:
-| Visual Element | Type | Dimension / Measure | Business Purpose |
+#### 🔍 Page 1 Key Visuals & Verified Metrics:
+| Visual Element | Visual Type | Field / Measure | Metric Value / Insight |
 | :--- | :--- | :--- | :--- |
-| **KPI Scorecards** | Card Visuals | `TOTAL SALES`, `TOTAL QUANTITY`, `AVG UNIT PRICE`, `CUSTOMERS` | Instant executive view of top-line volume & revenue with dynamic YoY growth % indicator. |
-| **Revenue Trend** | Line Chart | `time_dim.month` vs `DAX Measure.TOTAL SALES` | Traces seasonal momentum and revenue velocity across monthly cycles. |
-| **Geographic Heatmap** | Bubble Map | `store_dim.district`, `store_dim.upazila` vs `TOTAL SALES` | Geospatial sales clustering across 64 districts & 726 retail outlets. |
-| **Division Ranking** | Clustered Bar | `store_dim.division` vs `TOTAL SALES` | Ranks regional powerhouses (Dhaka, Chittagong, Sylhet). |
-| **Volume by Unit** | Horizontal Bar | `fact_table.unit` vs `TOTAL QUANTITY` | Identifies fast-moving packaging sizes (cans, bottles, ct, rolls). |
-| **Customer Share** | Donut Chart | `customer_dim.name` vs `TOTAL SALES` | Tracks high-net-worth VIP buyer revenue concentration. |
+| **💰 Total Revenue** | KPI Card + Sparkline | `DAX Measure.TOTAL SALES` | **$105.40M** (`+16.1% ▲ vs PY`) with monthly distribution sparkline |
+| **📦 Total Quantity** | KPI Card + Sparkline | `DAX Measure.TOTAL QUANTITY` | **6.00M Units** (`+16.1% ▲ vs PY`) with volume movement trend |
+| **🏷️ Avg Unit Price** | KPI Card + Sparkline | `DAX Measure.AVG UNIT PRICE` | **$17.56** (`0.0% ▼ vs PY`) maintaining consistent pricing power |
+| **👥 Customer Insight**| KPI Card | `DAX Measure.CUSTOMERS` | **9,191 Buyers** (`0.0% vs PY`) active client base |
+| **🍩 Top Spending Donut**| Donut Chart | `customer_dim.name` vs `TOTAL SALES` | **$6.27M Top 5 Spenders:** Pooja (33.7%), Jyoti (21.3%), Neha (15.9%), Sunita (14.6%), Poonam (14.6%) |
+| **📈 Monthly Sales Trend**| Line Chart with Markers | `time_dim.month` vs `TOTAL SALES` | Peak months reach **$9.06M**, **$9.05M**, and **$9.04M** with consistent annual demand |
+| **📦 Top 5 Units by Qty** | Clustered Bar Chart | `fact_table.unit` vs `TOTAL QUANTITY` | **pk:** 228K, **pack:** 113K, **tubs:** 67K, **rolls:** 46K, **tins:** 23K |
+| **🗺️ Bangladesh Geo Map** | Spatial Shape Map | `store_dim.division` vs `TOTAL SALES` | **Dhaka:** $23.6M, **Chittagong:** $7.29M, **Khulna:** $4.08M, **Barisal:** $2.90M, **Rajshahi:** $1.76M, **Sylhet:** $1.73M, **Rangpur:** $1.17M |
+| **🏢 Division Sales Bar** | Horizontal Bar Chart | `store_dim.division` vs `TOTAL SALES` | Top Grossing: **Dhaka (41M)**, **Chittagong (20M)**, **Rajshahi (12M)**, **Khulna (11M)**, **Rangpur (8M)** |
 
 ---
 
 ### 👥 Page 2: Customer Retention & Order Intelligence
-> **Core Objective:** Customer lifecycle segmentation, order frequency buckets, repeat customer retention rates, and product basket cross-selling dynamics.
+> **Core Objective:** Customer lifecycle frequency buckets, repeat customer retention rates (100%), multi-year quantity throughput, and product portfolio metrics.
 
 <div align="center">
-  <img src="assets/page2_customer_order_insight.png" alt="Page 2: Customer & Order Insight Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.25); margin-bottom: 8px;"/>
-  <p><b>Figure 2:</b> <i>Page 2 – Customer Lifecycle Segmentation, Order Frequency Buckets, Retention Rate % & New Acquisition Trajectory.</i></p>
+  <img src="assets/customer_orders_insight_report.png" alt="Page 2: Customer & Order Insight Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 8px;"/>
+  <p><b>Figure 2:</b> <i>Page 2 – Customer Lifecycle Segmentation, Order Frequency Buckets, Retention Rate % & Product-Level Sales Matrix.</i></p>
 </div>
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│  👥 CUSTOMER & ORDER INSIGHT                                              [ Search 🔍 ]│
+│  👥 CUSTOMER & ORDER INSIGHT                                      [ 🔍 Search SKU ]    │
 ├───────────────────┬───────────────────┬───────────────────┬────────────────────────────┤
 │  TOTAL CUSTOMERS  │ ACTIVE CUSTOMERS  │ RETURNING RATE %  │      AVG BASKET SIZE       │
-│       9,191       │   Dynamic Filter  │     ~88.4%        │         6.0 Units          │
+│       9,191       │       9,191       │      100.00%      │         ~6.0 Units         │
 ├───────────────────┴───────────────────┴───────────────────┴────────────────────────────┤
-│  🎯 Customer Order Bucket Segmentation (Pie)   │  🔻 Multi-Year Quantity Funnel Chart  │
-│  🌊 Store Location Revenue Ribbon Flow Chart   │  📈 Monthly New Customer Acquisition  │
-│  🔎 Item-Level Drill-Down & Search Slicer      │  📋 Detailed Product Metric Matrix    │
+│  🎯 Customer Distribution by Order Frequency   │  📊 Yearly Quantity Trend (100% Stacked)│
+│  📈 Monthly Customer & Quantity Dual Trend     │  🏪 Sales Distribution by Store Location│
+│  🛒 Top Products & Sales Metrics (Unit Price, Total Price, Quantity Sold)              │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### 🔍 Page 2 Visual Architecture & Insights:
-| Visual Element | Type | Dimension / Measure | Business Purpose |
+#### 🔍 Page 2 Key Visuals & Verified Metrics:
+| Visual Element | Visual Type | Field / Measure | Metric Value / Insight |
 | :--- | :--- | :--- | :--- |
-| **Retention Scorecards** | Card Visuals | `ACTIVE CUSTOMERS`, `RETURNING CUSTOMERS %`, `CUSTOMERS` | Monitors active buyer churn vs loyalty rates across cohorts. |
-| **Order Segmentation** | Pie Chart | `customer_dim.Order_Bucket` vs `ACTIVE CUSTOMERS` | Segregates one-time buyers from high-frequency repeat shoppers. |
-| **Acquisition vs Volume**| Dual-Axis Line | `time_dim.Month_Year` vs `NEW CUSTOMERS` & `QUANTITY` | Analyzes whether customer acquisition correlates with volume spikes. |
-| **Store Flow Ribbon** | Ribbon Chart | `store_dim.store_location` vs `TOTAL SALES` | Displays shifts in top retail location rankings across operating years. |
-| **Quantity Funnel** | Funnel Chart | `time_dim.year` vs `TOTAL QUANTITY` | Traces multi-year inventory flow and throughput expansion. |
-| **SKU Drillthrough** | Text Slicer & Table| `item_dim.item_name` vs `Unit Price`, `Total Sales`, `Qty` | Micro-level product performance diagnostics with instant search. |
+| **👥 Customer Retention KPIs** | Card Visuals | `CUSTOMERS`, `ACTIVE CUSTOMERS`, `RETURNING %` | **9,191 Total Customers**, **9,191 Active**, **100.00% Returning Customers** |
+| **🎯 Order Frequency Bucket** | Pie Chart | `customer_dim.Order_Bucket` vs `ACTIVE CUSTOMERS` | **1–29 Orders:** 6,053 (65.86%)<br/>**30–33 Orders:** 2,850 (31.01%)<br/>**34–37 Orders:** 288 (3.13%) |
+| **📊 Yearly Quantity Trend** | 100% Stacked Bar | `time_dim.year` vs `TOTAL QUANTITY` | Balanced annual inventory consumption across 2014 through 2021 |
+| **📈 Customer & Qty Trend** | Dual-Axis Line | `time_dim.Month_Year` vs `NEW CUSTOMERS` & `QTY` | Tracks customer purchasing consistency and order rhythm over time |
+| **🛒 Top Products Matrix** | Multi-Row Card Grid | `item_dim.item_name` vs `Sales Metrics` | • **100% Juice Box Variety 6.75 Oz:** Unit Price `$58.85K` \| Total `$351.38K` \| Qty `23K`<br/>• **A&W Root Beer - 12 Oz Cans:** Unit Price `$44.70K` \| Total `$271.66K` \| Qty `24K`<br/>• **A&W Root Beer Diet - 12 Oz:** Unit Price `$25.88K` \| Total `$156.48K` \| Qty `23K`<br/>• **Advil 2 Pill Packets:** Unit Price `$53.38K` \| Total `$323.76K` \| Qty `23K` |
+| **🏢 Sales by Store Location**| Distribution Bar | `store_dim.store_location` vs `TOTAL SALES` | Granular store-level revenue ranking across nationwide outlets |
 
 ---
 
-### 🎛️ Interactive Navigation & UX System
+### 🧭 Feature Highlight: Interactive Collapsible Navigation Drawer
+> **Core Objective:** Deliver a native app-like user experience with dynamic bookmark toggling, animated overlay states, and clutter-free dashboard navigation.
 
-- **📑 Bookmark-Driven Page Switching:** Integrated top/side navigation bar with responsive hover states and instant view transitions.
-- **🔄 Universal Filter Syncing:** Slicers dynamically preserve temporal and regional filters across both report pages.
-- **💡 Tooltip Drillthrough:** Rich tooltips provide instant granular details on hover for every chart data point.
+<div align="center">
+  <img src="assets/collapsible_navbar_menu.png" alt="Interactive Collapsible Navigation Drawer in Power BI" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 8px;"/>
+  <p><b>Figure 3:</b> <i>Interactive Popout Navigation Drawer with state toggling, smooth page switching, and back arrow overlay.</i></p>
+</div>
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│  ┌───────────────────────┐                                                             │
+│  │ ≡ [← Close Drawer]    │   Year Wise Analysis                         [ year: All ▾ ]│
+│  │                       │                                                             │
+│  │  ( Year Wise Analysis )                                                             │
+│  │                       │   Revenue             Quantity            Avg Unit Price    │
+│  │  ( Customer & Orders )│   $105.40M            6.00M               17.56             │
+│  │                       │                                                             │
+│  └───────────────────────┘                                                             │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### ⚙️ How the Navigation Drawer is Built:
+1. **🔖 Bookmark State Machine:** Configured using Power BI's **Bookmarks Pane** (`Open Menu` and `Close Menu` states) to control visual visibility without resetting slicer contexts.
+2. **👁️ Selection Pane Layering:** Shape overlays and button containers are grouped and assigned show/hide rules for smooth opening and collapsing.
+3. **🔘 Action Buttons:** Custom pill-shaped interactive buttons with hover state feedback that trigger instant page transitions between **Year Wise Analysis** and **Customer & Order Insight**.
+4. **🎨 Neon Modern UI Design:** Styled with vibrant accent blues, curved border radii, and intuitive back-arrow (`←`) close triggers.
 
 ---
 
@@ -377,16 +402,18 @@ CALCULATE(
 │   ├── 📄 time_dim.csv                 # Granular Date-Time Dimension (2014-2021)
 │   └── 📄 Trans_dim.csv                # Transaction & Payment Methods (Cash, Bank, MFS)
 │
-└── 📁 assets/                          # Report Icons, Badges, and Visual Resources
-    ├── 🖼️ report_preview.png           # Dashboard Layout Showcase Preview
-    ├── 🖼️ dashboard-canvas-template.png# Full UI Grid Template
-    ├── 🖼️ icon-analytics.png           # KPI Analytics Badge
-    ├── 🖼️ icon-revenue.png             # Cash Flow / Revenue Icon
-    ├── 🖼️ icon-growth.png              # Growth / Trends Indicator Icon
-    ├── 🖼️ icon-customers.png           # Customer Profiling Icon
-    ├── 🖼️ icon-products.png            # Inventory / Product Management Icon
-    ├── 🖼️ icon-retention.png           # Retention & Repeat Visitor Icon
-    └── 🖼️ icon-rating.png              # Quality / Performance Rating Icon
+└── 📁 assets/                          # Report Screenshots, Canvas, and UI Icons
+    ├── 🖼️ year_wise_analysis_report.png        # Page 1: Financial & Sales Analytics Report
+    ├── 🖼️ customer_orders_insight_report.png   # Page 2: Customer Retention & Order Matrix
+    ├── 🖼️ collapsible_navbar_menu.png          # Feature: Animated Bookmark Navigation Drawer
+    ├── 🖼️ dashboard-canvas-template.png        # High-Resolution Widescreen UI Canvas
+    ├── 🖼️ icon-analytics.png                   # KPI Metric Badge (Analytics)
+    ├── 🖼️ icon-revenue.png                     # KPI Metric Badge (Revenue / Cash Flow)
+    ├── 🖼️ icon-growth.png                      # KPI Metric Badge (YoY Growth Trends)
+    ├── 🖼️ icon-customers.png                   # KPI Metric Badge (Customer Base)
+    ├── 🖼️ icon-products.png                    # KPI Metric Badge (Product Catalog)
+    ├── 🖼️ icon-retention.png                   # KPI Metric Badge (Customer Retention)
+    └── 🖼️ icon-rating.png                      # KPI Metric Badge (Satisfaction Rating)
 ```
 
 ---
