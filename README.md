@@ -15,7 +15,7 @@
   <b>An enterprise-grade, interactive Business Intelligence solution engineered to analyze 1,000,000+ sales transactions, track multi-year revenue velocity ($105.4M+), monitor omnichannel retail performance across 726 stores, and extract deep customer retention insights.</b>
 </p>
 
-[Explore Dashboard](#-dashboard-visual-showcase) •
+[Explore Dashboard](#-dashboard-visual-showcase--report-pages) •
 [Data Architecture](#-data-architecture--star-schema) •
 [DAX Measures](#-dax-formulas--business-logic) •
 [Project Structure](#-project-directory-structure) •
@@ -29,9 +29,9 @@
 
 - [🌟 Executive Summary](#-executive-summary)
 - [📈 Key Performance Indicators (KPIs)](#-key-performance-indicators-kpis)
-- [🖥️ Dashboard Visual Showcase](#-dashboard-visual-showcase)
-  - [1. Year-Wise Performance Dashboard](#1-year-wise-performance-dashboard)
-  - [2. Customer & Order Insight Dashboard](#2-customer--order-insight-dashboard)
+- [🖥️ Dashboard Visual Showcase & Report Pages](#-dashboard-visual-showcase--report-pages)
+  - [📊 Page 1: Year-Wise Sales & Financial Performance](#-page-1-year-wise-sales--financial-performance)
+  - [👥 Page 2: Customer Retention & Order Intelligence](#-page-2-customer-retention--order-intelligence)
 - [🧩 Data Architecture & Star Schema](#-data-architecture--star-schema)
 - [📚 Data Dictionary](#-data-dictionary)
 - [⚡ DAX Formulas & Business Logic](#-dax-formulas--business-logic)
@@ -74,21 +74,19 @@ The model processes **1,000,000 transactional records** spanning **2014 to 2021*
 
 ---
 
-## 🖥️ Dashboard Visual Showcase
+## 🖥️ Dashboard Visual Showcase & Report Pages
 
-The Power BI report utilizes a **custom-designed layout canvas (1280x720)** featuring modern glassmorphism containers, custom metric icons, dark/light theme balancing, and seamless bookmark-driven page navigation.
-
-### 🖼️ Report Canvas Preview
-
-<div align="center">
-  <img src="template.png" alt="Power BI Dashboard Template Canvas" width="100%" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"/>
-  <p><i>Figure 1: Custom UI Layout Canvas with integrated KPI cards, visual zones, and navigation rail.</i></p>
-</div>
+The Power BI report utilizes an ultra-modern, custom-designed **1280×720 widescreen canvas** incorporating glassmorphic metric containers, dark/light theme harmony, responsive visual cards, and seamless bookmark-driven navigation.
 
 ---
 
-### 1. Year-Wise Performance Dashboard
-> **Focus:** Macro-economic sales trajectory, Year-over-Year (YoY) growth rates, geographic heatmaps, and product packaging metrics.
+### 📊 Page 1: Year-Wise Sales & Financial Performance
+> **Core Objective:** Macro-economic sales trajectory, Year-over-Year (YoY) revenue velocity, regional geographic penetration, and packaging distribution.
+
+<div align="center">
+  <img src="assets/page1_year_wise_analysis.png" alt="Page 1: Year-Wise Analysis Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.25); margin-bottom: 8px;"/>
+  <p><b>Figure 1:</b> <i>Page 1 – Year-Wise Financial Performance, YoY Metric Scorecards, Monthly Sales Trends & Geographic Upazila Heatmap.</i></p>
+</div>
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -103,18 +101,25 @@ The Power BI report utilizes a **custom-designed layout canvas (1280x720)** feat
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Key Visual Components:
-- **🎛️ Interactive Time Slicer:** Instant temporal slicing across 2014, 2015, 2016, 2017, 2018, 2019, 2020, and 2021.
-- **💳 Dynamic YoY Cards:** Real-time percentage delta calculations comparing current selection against `SAMEPERIODLASTYEAR`.
-- **📈 Monthly Revenue Trajectory (Line Chart):** Multi-year seasonal curve identifying annual peak purchasing quarters (Q2 & Q4 spikes).
-- **🗺️ Geospatial Division & Upazila Bubble Map:** Highlighting high-density consumer clusters across Dhaka, Chittagong, and Sylhet.
-- **🍩 Customer Contribution Donut:** Visualizing high-value VIP customer concentration.
-- **📦 Packaging Unit Breakdown:** Product volume segmented by cans, bottles, ct, and rolls.
+#### 🔍 Page 1 Visual Architecture & Insights:
+| Visual Element | Type | Dimension / Measure | Business Purpose |
+| :--- | :--- | :--- | :--- |
+| **KPI Scorecards** | Card Visuals | `TOTAL SALES`, `TOTAL QUANTITY`, `AVG UNIT PRICE`, `CUSTOMERS` | Instant executive view of top-line volume & revenue with dynamic YoY growth % indicator. |
+| **Revenue Trend** | Line Chart | `time_dim.month` vs `DAX Measure.TOTAL SALES` | Traces seasonal momentum and revenue velocity across monthly cycles. |
+| **Geographic Heatmap** | Bubble Map | `store_dim.district`, `store_dim.upazila` vs `TOTAL SALES` | Geospatial sales clustering across 64 districts & 726 retail outlets. |
+| **Division Ranking** | Clustered Bar | `store_dim.division` vs `TOTAL SALES` | Ranks regional powerhouses (Dhaka, Chittagong, Sylhet). |
+| **Volume by Unit** | Horizontal Bar | `fact_table.unit` vs `TOTAL QUANTITY` | Identifies fast-moving packaging sizes (cans, bottles, ct, rolls). |
+| **Customer Share** | Donut Chart | `customer_dim.name` vs `TOTAL SALES` | Tracks high-net-worth VIP buyer revenue concentration. |
 
 ---
 
-### 2. Customer & Order Insight Dashboard
-> **Focus:** Customer lifecycle segmentation, order frequency buckets, repeat customer retention rates, and cross-selling product dynamics.
+### 👥 Page 2: Customer Retention & Order Intelligence
+> **Core Objective:** Customer lifecycle segmentation, order frequency buckets, repeat customer retention rates, and product basket cross-selling dynamics.
+
+<div align="center">
+  <img src="assets/page2_customer_order_insight.png" alt="Page 2: Customer & Order Insight Power BI Report" width="100%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.25); margin-bottom: 8px;"/>
+  <p><b>Figure 2:</b> <i>Page 2 – Customer Lifecycle Segmentation, Order Frequency Buckets, Retention Rate % & New Acquisition Trajectory.</i></p>
+</div>
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -129,12 +134,23 @@ The Power BI report utilizes a **custom-designed layout canvas (1280x720)** feat
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Key Visual Components:
-- **🎯 Order Bucket Segmentation (Pie Chart):** Segregating one-time purchasers, regular repeat buyers, and high-frequency VIP buyers.
-- **🔄 Retention & Repeat Buyer %:** Quantifies customer loyalty and recurring lifetime value (LTV).
-- **🌊 Store Location Ribbon Chart:** Dynamically ranks top-performing retail hubs over continuous time intervals.
-- **🔻 Quantity Funnel:** Funnel analysis tracing order progression and inventory throughput by operating year.
-- **🆕 Monthly New Customer Acquisition Line Chart:** Dual-axis chart correlating new customer influx with unit sales volume.
+#### 🔍 Page 2 Visual Architecture & Insights:
+| Visual Element | Type | Dimension / Measure | Business Purpose |
+| :--- | :--- | :--- | :--- |
+| **Retention Scorecards** | Card Visuals | `ACTIVE CUSTOMERS`, `RETURNING CUSTOMERS %`, `CUSTOMERS` | Monitors active buyer churn vs loyalty rates across cohorts. |
+| **Order Segmentation** | Pie Chart | `customer_dim.Order_Bucket` vs `ACTIVE CUSTOMERS` | Segregates one-time buyers from high-frequency repeat shoppers. |
+| **Acquisition vs Volume**| Dual-Axis Line | `time_dim.Month_Year` vs `NEW CUSTOMERS` & `QUANTITY` | Analyzes whether customer acquisition correlates with volume spikes. |
+| **Store Flow Ribbon** | Ribbon Chart | `store_dim.store_location` vs `TOTAL SALES` | Displays shifts in top retail location rankings across operating years. |
+| **Quantity Funnel** | Funnel Chart | `time_dim.year` vs `TOTAL QUANTITY` | Traces multi-year inventory flow and throughput expansion. |
+| **SKU Drillthrough** | Text Slicer & Table| `item_dim.item_name` vs `Unit Price`, `Total Sales`, `Qty` | Micro-level product performance diagnostics with instant search. |
+
+---
+
+### 🎛️ Interactive Navigation & UX System
+
+- **📑 Bookmark-Driven Page Switching:** Integrated top/side navigation bar with responsive hover states and instant view transitions.
+- **🔄 Universal Filter Syncing:** Slicers dynamically preserve temporal and regional filters across both report pages.
+- **💡 Tooltip Drillthrough:** Rich tooltips provide instant granular details on hover for every chart data point.
 
 ---
 
